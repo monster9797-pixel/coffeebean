@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopee Link Retrieval</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f4f6f9; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 90%; max-width: 400px; text-align: center; }
+        h2 { color: #ee4d2d; margin-bottom: 8px; font-size: 22px; }
+        p { color: #666; font-size: 14px; margin-bottom: 20px; }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #e1e4e8; border-radius: 8px; box-sizing: border-box; font-size: 15px; outline: none; }
+        input:focus { border-color: #ee4d2d; }
+        button { width: 100%; padding: 14px; background: #ee4d2d; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:hover { background: #d73211; }
+        #result { margin-top: 20px; font-size: 15px; word-break: break-all; line-height: 1.6; }
+        .success { color: #2e7d32; font-weight: bold; }
+        .error { color: #d32f2f; font-weight: bold; }
+        .link-box { background: #f9f9f9; padding: 12px; border-radius: 8px; border: 1px dashed #ee4d2d; margin-top: 10px; }
+        a { color: #ee4d2d; font-weight: bold; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Shopee Link Retrieval</h2>
+    <p>Enter your Shopee Order Serial No. below</p>
+
+    <input type="text" id="orderId" placeholder="e.g. 260820U031H9CU">
+    <button onclick="getLink()">Get My Link</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    // 已将你刚刚生成的 API 链接配置好
+    const API_URL = "https://script.google.com/macros/s/AKfycbzkzKDLup4b1zQNxUP_31bQ6i7sXNsPf1gCZiK1e9JpzDN2DH570Z_OOJqAzmUTYUbAiQ/exec"; 
+
+    function getLink() {
+        const orderIdInput = document.getElementById("orderId").value.trim();
+        const resultDiv = document.getElementById("result");
+        
+        if(!orderIdInput) {
+            resultDiv.innerHTML = "<span class='error'>Please enter a valid Order ID!</span>";
+            return;
+        }
+
+        resultDiv.innerHTML = "<span style='color:#666;'>Checking order... Please wait.</span>";
+
+        fetch(`${API_URL}?order_id=${encodeURIComponent(orderIdInput)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === "success") {
+                resultDiv.innerHTML = `
+                    <span class='success'>${data.message}</span>
+                    <div class='link-box'>
+                        <a href="${data.link}" target="_blank">${data.link}</a>
+                    </div>`;
+            } else {
+                resultDiv.innerHTML = `<span class='error'>${data.message}</span>`;
+            }
+        })
+        .catch(err => {
+            resultDiv.innerHTML = "<span class='error'>Network error. Please try again!</span>";
+        });
+    }
+</script>
+
+</body>
+</html>
