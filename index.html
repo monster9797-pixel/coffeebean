@@ -6,10 +6,14 @@
     <title>Shopee Link Retrieval</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: #f4f6f9; margin: 0; padding: 20px 0; }
-        .card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 90%; max-width: 420px; text-align: center; margin-bottom: 20px; box-sizing: border-box; }
+        .card { background: white; padding: 25px 20px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 92%; max-width: 420px; text-align: center; margin-bottom: 20px; box-sizing: border-box; }
+        
+        /* 针对 OTP 卡片专门优化，把内边距缩小，留出最大空间给内部系统 */
+        .card-otp { padding: 20px 10px !important; }
+
         h2 { color: #ee4d2d; margin-bottom: 8px; font-size: 22px; }
         h3 { color: #333; font-size: 16px; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        p { color: #666; font-size: 14px; margin-bottom: 20px; }
+        p { color: #666; font-size: 14px; margin-bottom: 15px; }
         input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #e1e4e8; border-radius: 8px; box-sizing: border-box; font-size: 15px; outline: none; }
         input:focus { border-color: #ee4d2d; }
         button { width: 100%; padding: 14px; background: #ee4d2d; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
@@ -26,20 +30,18 @@
         /* 响应式视频容器 */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-top: 10px; background: #000; }
         .video-container iframe { position: absolute; top:0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
-
-        /* 视频未拍摄时的占位样式 */
         .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #222; color: #fff; border-radius: 8px; }
         .video-placeholder span { font-size: 32px; margin-bottom: 8px; }
         .video-placeholder p { color: #ccc; font-size: 13px; margin: 0; }
 
-        /* OTP 内嵌框架容器 */
-        .otp-container { width: 100%; height: 260px; border: 1px solid #e1e4e8; border-radius: 12px; overflow: hidden; margin-top: 10px; background: #fff; }
+        /* OTP 完美适配样式：加大高度 + 无缝拉伸 */
+        .otp-container { width: 100%; height: 480px; border: 1px solid #e1e4e8; border-radius: 12px; overflow: hidden; margin-top: 10px; background: #fff; }
         .otp-container iframe { width: 100%; height: 100%; border: 0; }
     </style>
 </head>
 <body>
 
-<!-- 1. 顶部：提卡查询主卡片 -->
+<!-- 1. 顶部：提卡查询区域 -->
 <div class="card">
     <h2>Shopee Link Retrieval</h2>
     <p>Enter your Shopee Order Serial No. below</p>
@@ -53,7 +55,6 @@
 <div class="card">
     <h3>📖 Video Tutorial / 视频教程</h3>
     <div class="video-container">
-        <!-- 拍好 YouTube 视频后，取消下方注释并填写视频 ID 即可： -->
         <!-- <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" allowfullscreen></iframe> -->
         <div class="video-placeholder">
             <span>▶️</span>
@@ -62,12 +63,11 @@
     </div>
 </div>
 
-<!-- 3. 底部：OTP 验证码直接内嵌区域 -->
-<div class="card">
+<!-- 3. 底部：OTP 验证码完美适配区域 -->
+<div class="card card-otp">
     <h3>🔑 Get OTP Code / 提取 OTP 验证码</h3>
-    <p style="margin-bottom: 10px;">Use the tool below to retrieve your OTP code directly.</p>
+    <p style="margin-bottom: 8px; font-size: 13px;">Use the tool below to retrieve your OTP code directly.</p>
     
-    <!-- 内嵌 OTP 系统 -->
     <div class="otp-container">
         <iframe src="https://script.google.com/macros/s/AKfycbyb6rwHNdef4SyAY7CqtJxvVCjKryinUrNk7P0V6WA76Xt62ArHXgmY_axtnDlB3Xv90w/exec"></iframe>
     </div>
