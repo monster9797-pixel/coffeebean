@@ -27,20 +27,19 @@
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-top: 10px; background: #000; }
         .video-container iframe { position: absolute; top:0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
 
-        /* 视频未拍摄时的预留占位样式 */
+        /* 视频未拍摄时的占位样式 */
         .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #222; color: #fff; border-radius: 8px; }
         .video-placeholder span { font-size: 32px; margin-bottom: 8px; }
         .video-placeholder p { color: #ccc; font-size: 13px; margin: 0; }
 
-        /* OTP 区域样式 */
-        .otp-box { margin-top: 25px; padding-top: 15px; border-top: 1px dashed #ddd; text-align: center; }
-        .otp-btn { background: #ff9800; color: white; display: block; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 15px; transition: 0.2s; }
-        .otp-btn:hover { background: #e68a00; }
+        /* OTP 内嵌框架容器 */
+        .otp-container { width: 100%; height: 260px; border: 1px solid #e1e4e8; border-radius: 12px; overflow: hidden; margin-top: 10px; background: #fff; }
+        .otp-container iframe { width: 100%; height: 100%; border: 0; }
     </style>
 </head>
 <body>
 
-<!-- 1. 提卡查询区域 -->
+<!-- 1. 顶部：提卡查询主卡片 -->
 <div class="card">
     <h2>Shopee Link Retrieval</h2>
     <p>Enter your Shopee Order Serial No. below</p>
@@ -50,39 +49,31 @@
     <div id="result"></div>
 </div>
 
-<!-- 2. 视频教程与 OTP 辅助区域 -->
+<!-- 2. 中间：YouTube 视频教程区域 -->
 <div class="card">
-    <h3>📖 Tutorial & Services / 教程与服务</h3>
-    
-    <p style="text-align: left; margin-bottom: 5px; font-weight: bold;">🎥 Video Guide / 视频教程</p>
-    
-    <!-- YouTube 视频预留容器 -->
+    <h3>📖 Video Tutorial / 视频教程</h3>
     <div class="video-container">
-        <!-- 今后发布 YouTube 视频后：
-             1. 取消下方的 <iframe> 注释
-             2. 将 YOUR_YOUTUBE_VIDEO_ID 替换为你的 YouTube 视频 ID 
-             3. 删掉 <div class="video-placeholder"> 即可
-        -->
+        <!-- 拍好 YouTube 视频后，取消下方注释并填写视频 ID 即可： -->
         <!-- <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" allowfullscreen></iframe> -->
-
-        <!-- 暂无视频时的占位框 -->
         <div class="video-placeholder">
             <span>▶️</span>
             <p>Video Tutorial Coming Soon...</p>
         </div>
     </div>
+</div>
 
-    <!-- OTP 验证码提取入口 -->
-    <div class="otp-box">
-        <p style="text-align: left; margin-bottom: 8px; font-weight: bold; color: #333;">🔑 Need OTP Verification? / 需要提取 OTP 验证码？</p>
-        <a href="https://script.google.com/macros/s/AKfycbyb6rwHNdef4SyAY7CqtJxvVCjKryinUrNk7P0V6WA76Xt62ArHXgmY_axtnDlB3Xv90w/exec" target="_blank" class="otp-btn">
-            👉 Click Here to Get OTP Code / 点击前往提取 OTP
-        </a>
+<!-- 3. 底部：OTP 验证码直接内嵌区域 -->
+<div class="card">
+    <h3>🔑 Get OTP Code / 提取 OTP 验证码</h3>
+    <p style="margin-bottom: 10px;">Use the tool below to retrieve your OTP code directly.</p>
+    
+    <!-- 内嵌 OTP 系统 -->
+    <div class="otp-container">
+        <iframe src="https://script.google.com/macros/s/AKfycbyb6rwHNdef4SyAY7CqtJxvVCjKryinUrNk7P0V6WA76Xt62ArHXgmY_axtnDlB3Xv90w/exec"></iframe>
     </div>
 </div>
 
 <script>
-    // 你的提卡后端 API 部署地址
     const API_URL = "https://script.google.com/macros/s/AKfycbzkzKDLup4b1zQNxUP_31bQ6i7sXNsPf1gCZiK1e9JpzDN2DH570Z_OOJqAzmUTYUbAiQ/exec"; 
 
     function getLink() {
@@ -115,7 +106,6 @@
         });
     }
 
-    // 一键复制功能
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
             const copyBtn = document.querySelector(".copy-btn");
